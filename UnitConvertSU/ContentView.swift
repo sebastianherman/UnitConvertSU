@@ -13,8 +13,12 @@ struct ContentView: View {
     @State private var unitInput = ""
     @State private var selectedUnitFrom = 0
     @State private var selectedUnitTo = 0
+    @State private var measureType = 0
     
-    let units = [Units.metres, Units.kilometres, Units.feet, Units.yards, Units.miles]
+    let units = [UnitsLen.metres, UnitsLen.kilometres, UnitsLen.feet, UnitsLen.yards, UnitsLen.miles]
+    
+    //TODO: - switch modes
+    let settings = ["Length", "Temperature"]
     
     var finalResult: Double {
         
@@ -31,6 +35,14 @@ struct ContentView: View {
         
         NavigationView {
             Form {
+                
+                Section(header: Text("Measurement")) {
+                    Picker("sett", selection: $measureType) {
+                        ForEach(0..<settings.count) {
+                            Text("\(self.settings[$0])")
+                        }
+                    }.pickerStyle(SegmentedPickerStyle())
+                }
                 
                 Section(header: Text("Convert from")) {
                     TextField("start typing...", text: $unitInput).keyboardType(.decimalPad)
@@ -49,8 +61,8 @@ struct ContentView: View {
                     }.pickerStyle(SegmentedPickerStyle())
                 }
                 
-                Section {
-                    Text("\(finalResult, specifier: "%.5g")")
+                Section(header: Text("Equals to")) {
+                    Text("\(finalResult, specifier: "%.5g") \(units[selectedUnitTo].rawValue)")
                 }
             }
             
