@@ -17,9 +17,6 @@ struct ContentView: View {
     
     let units = [UnitsLen.metres, UnitsLen.kilometres, UnitsLen.feet, UnitsLen.yards, UnitsLen.miles]
     
-    //TODO: - switch modes
-    let settings = ["Length", "Temperature"]
-    
     var finalResult: Double {
         
         let amount = Double(unitInput) ?? 0
@@ -35,14 +32,6 @@ struct ContentView: View {
         
         NavigationView {
             Form {
-                
-                Section(header: Text("Measurement")) {
-                    Picker("sett", selection: $measureType) {
-                        ForEach(0..<settings.count) {
-                            Text("\(self.settings[$0])")
-                        }
-                    }.pickerStyle(SegmentedPickerStyle())
-                }
                 
                 Section(header: Text("Convert from")) {
                     TextField("start typing...", text: $unitInput).keyboardType(.decimalPad)
